@@ -1,22 +1,21 @@
-# Using only pickle
+import os
 import pickle
 import networkx as nx
 
-# Lade die ITS-Graphen-Daten aus der Pickle-Datei
-with open(r"C:\Users\Louisa\Downloads\ITS_graphs.pkl.gz", 'rb') as f:  # Absoluter Pfad zu deiner Datei
+# Relativer Pfad zur Pickle-Datei
+file_path = os.path.join('data', 'ITS_graphs.pkl.gz')
+
+# Lade die ITS-Graphen-Daten
+with open(file_path, 'rb') as f:
     data = pickle.load(f)
-
-# Using SynUtils
-from synutility.SynIO.data_type import load_from_pickle #hier data_type statt datatype
-
-
-# ITS-Graphen-Daten mit SynUtils laden
-data = load_from_pickle(r"C:\Users\Louisa\Downloads\ITS_graphs.pkl.gz")  # Absoluter Pfad
 
 # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc
 #from src.rcextract import get_rc
 reaction_center = get_rc(data[0]['ITS'])  # Reaktionszentrum extrahieren
+vertex_degrees = dict(reaction_center.degree())
+print(vertex_degrees)
+
 
 from synutility.SynVis.graph_visualizer import GraphVisualizer  #auch hier hat n unterstrich gefehlt
 import matplotlib.pyplot as plt

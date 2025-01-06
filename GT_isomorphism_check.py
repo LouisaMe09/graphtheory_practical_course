@@ -47,7 +47,6 @@ def are_rcs_isomorphic(rc_1, rc_2):
     return GM.is_isomorphic()
 
 
-
 # # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc
 rc_1 = get_rc(data[0]['ITS'])

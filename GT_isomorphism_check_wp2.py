@@ -1,9 +1,17 @@
 # Using only pickle
 import pickle
 import networkx as nx
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=True)
+args = parser.parse_args()
+
+graph_path = args.graphs
 
 # Lade die ITS-Graphen-Daten aus der Pickle-Datei
-with open(r"C:\Users\Louisa\Downloads\ITS_graphs.pkl.gz", 'rb') as f:  # Absoluter Pfad zu deiner Datei
+with open(graph_path, 'rb') as f:  # Absoluter Pfad zu deiner Datei
     data = pickle.load(f)
 
 # Using SynUtils
@@ -11,7 +19,7 @@ from synutility.SynIO.data_type import load_from_pickle #hier data_type statt da
 
 
 # ITS-Graphen-Daten mit SynUtils laden
-data = load_from_pickle(r"C:\Users\Louisa\Downloads\ITS_graphs.pkl.gz")  # Absoluter Pfad
+data = load_from_pickle(graph_path)  # Absoluter Pfad
 
 from networkx.algorithms.isomorphism import GraphMatcher
 #isomorphism check
@@ -50,8 +58,37 @@ def are_rcs_isomorphic(rc_1, rc_2):
 
 # # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc
-rc_1 = get_rc(data[0]['ITS'])
-rc_2 = get_rc(data[2]['ITS'])
+#rc_1 = get_rc(data[0]['ITS'])
+#rc_2 = get_rc(data[2]['ITS'])
 
 
-print(are_rcs_isomorphic(rc_1, rc_2)) 
+#print(are_rcs_isomorphic(rc_1, rc_2))
+
+graph_counter = 0
+iso_sets = []
+iso_num = []
+
+for d in data:
+    print(graph_counter)
+
+    rc = get_rc(data[graph_counter]['ITS'])
+
+    found_iso = False
+    iso_counter = 0
+
+    for iso_set in iso_sets:
+        if are_rcs_isomorphic(iso_set[0][1], rc):
+            found_iso = True
+            iso_sets[iso_counter].append((graph_counter, rc))
+            iso_num[iso_counter].append(d['R-id'])
+
+        iso_counter += 1
+
+
+    if not found_iso:
+        iso_sets.append([(graph_counter, rc)])
+        iso_num.append([d['R-id']])
+
+    graph_counter += 1
+
+    print(iso_num)

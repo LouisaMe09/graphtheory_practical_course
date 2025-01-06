@@ -1,9 +1,17 @@
 # Using only pickle
 import pickle
 import networkx as nx
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=True)
+args = parser.parse_args()
+
+graph_path = args.graphs
 
 # Lade die ITS-Graphen-Daten aus der Pickle-Datei
-with open(r"C:\Users\Louisa\Downloads\ITS_graphs.pkl.gz", 'rb') as f:  # Absoluter Pfad zu deiner Datei
+with open(graph_path, 'rb') as f:  # Absoluter Pfad zu deiner Datei
     data = pickle.load(f)
 
 # Using SynUtils
@@ -11,7 +19,7 @@ from synutility.SynIO.data_type import load_from_pickle #hier data_type statt da
 
 
 # ITS-Graphen-Daten mit SynUtils laden
-data = load_from_pickle(r"C:\Users\Louisa\Downloads\ITS_graphs.pkl.gz")  # Absoluter Pfad
+data = load_from_pickle(graph_path)  # Absoluter Pfad
 
 # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc

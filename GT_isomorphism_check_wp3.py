@@ -133,7 +133,7 @@ for cluster in cluster_sets:
         graph_id = graph[2]
         found_iso = False
         iso_set_counter = 0
-        for iso_set in iso_cluster_sets[iso_cluster_counter]:
+        for iso_set in iso_cluster_sets[iso_cluster_counter]:  #iteriert über alle listen von rcs in dem cluster
             if are_rcs_isomorphic(iso_set[0], rc):
                 found_iso = True
                 iso_cluster_sets[iso_cluster_counter][iso_set_counter].append(rc)

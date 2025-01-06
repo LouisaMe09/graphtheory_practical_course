@@ -4,11 +4,15 @@ import networkx as nx
 import argparse
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=True)
-args = parser.parse_args()
+# parser = argparse.ArgumentParser()
+# parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=True)
+# args = parser.parse_args()
 
-graph_path = args.graphs
+# graph_path = args.graphs
+
+graph_path = r"C:\Users\Louisa\Documents\Graphentheorie\graphtheory_practical_course\data\ITS_graphs.pkl.gz"
+
+
 
 # Lade die ITS-Graphen-Daten aus der Pickle-Datei
 with open(graph_path, 'rb') as f:  # Absoluter Pfad zu deiner Datei

@@ -94,7 +94,9 @@ data_length = len(data)
 for d in data:
     print("Graphs: " + str(graph_counter) + "/" + str(data_length))
 
-    rc = get_rc(data[graph_counter]['ITS'])
+    # rc = get_rc(data[graph_counter]['ITS'])
+    g = data[graph_counter]['ITS']
+    rc = nx.edge_subgraph(g, [(e[0], e[1]) for e in g.edges(data=True) if e[2]["standard_order"] != 0])
 
     found_cluster = False
     cluster_counter = 0

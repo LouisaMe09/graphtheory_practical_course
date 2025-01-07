@@ -3,10 +3,12 @@ import pickle
 import networkx as nx
 import argparse
 import numpy as np
+import os
 
+file_path = os.path.join('data', 'ITS_graphs.pkl.gz')
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=True)
+parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=False, default=file_path)
 parser.add_argument("-a", "--algorithm", help="Specifies the clustering algorithm to be used.", required=False, default="vertex_count")
 args = parser.parse_args()
 
@@ -58,9 +60,12 @@ def are_rcs_isomorphic(rc_1, rc_2):
 
 # # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc
+from utils import compute_wl_hash
 #rc_1 = get_rc(data[0]['ITS'])
 #rc_2 = get_rc(data[2]['ITS'])
 
+# iterations for wl graph hash algo
+iterations = 3
 
 #print(are_rcs_isomorphic(rc_1, rc_2))
 
@@ -82,7 +87,8 @@ def cluster_alg(rc_1, rc_2, alg):
 
         return rank_1 == rank_2
     if alg == "weisfeiler_lehman":
-        return nx.weisfeiler_lehman_graph_hash(rc_1) == nx.weisfeiler_lehman_graph_hash(rc_2)
+        # return nx.weisfeiler_lehman_graph_hash(rc_1) == nx.weisfeiler_lehman_graph_hash(rc_2)
+        return compute_wl_hash(rc_1, iterations) == compute_wl_hash(rc_2, iterations)
 
 
 
@@ -150,3 +156,5 @@ for cluster in cluster_sets:
     iso_cluster_counter += 1
 
 print(iso_num)
+print(len(iso_num))
+

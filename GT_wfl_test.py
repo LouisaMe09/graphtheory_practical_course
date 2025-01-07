@@ -27,31 +27,71 @@ data = load_from_pickle(graph_path)  # Absoluter Pfad
 
 # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc
-#from src.rcextract import get_rc
-reaction_center = get_rc(data[0]['ITS'])  # Reaktionszentrum extrahieren
 
+graph1 = get_rc(data[113]['ITS'])
+graph2 = get_rc(data[34]['ITS'])
 
-nx.set_node_attributes(reaction_center, 1, name="compressed_label")
-nx.set_node_attributes(reaction_center, (None, None), name="label")
+def update_labels(graph):
+    """Aktualisiert die Labels eines Graphen basierend auf compressed_label und den Nachbarn."""
+    for node in graph.nodes():
+        c_label = graph.nodes[node]["compressed_label"]
+        neighbor_labels = [
+            graph.nodes[neighbor]["compressed_label"] for neighbor in graph.neighbors(node)
+        ]
+        sorted_neighbor_labels = tuple(sorted(neighbor_labels))
+        graph.nodes[node]["label"] = (c_label, sorted_neighbor_labels)
 
+def weisfeiler_lehman(graph1, graph2, num_iterations=1):
+    # Initialisierung: Setze compressed_label und label
+    for graph in [graph1, graph2]:
+        for node in graph.nodes():
+            graph.nodes[node]["compressed_label"] = 1
+            graph.nodes[node]["label"] = (None, None)
 
-for node in reaction_center.nodes():
-    c_label= reaction_center.nodes[node]["compressed_label"]
-    neighbor_labels = [reaction_center.nodes[neighbor]["compressed_label"] for neighbor in reaction_center.neighbors(node)]
-    sorted_neighbor_labels = sorted(neighbor_labels)  # Sortiere die Liste
+    # Iterative Berechnung
+    for _ in range(num_iterations):
+        # Schritt 1: Aktualisiere die Labels basierend auf compressed_label
+        for graph in [graph1, graph2]:
+            update_labels(graph)
 
-    reaction_center.nodes[node]["label"] = (c_label, sorted_neighbor_labels)
+        # Schritt 2: Sammle alle Labels aus beiden Graphen
+        all_labels = set()
+        for graph in [graph1, graph2]:
+            for node in graph.nodes():
+                all_labels.add(graph.nodes[node]["label"])
 
+        # Schritt 3: Weisen jedem Label einen eindeutigen Integer-Wert zu
+        label_to_int = {label: idx for idx, label in enumerate(sorted(all_labels), start=2)}
 
-print(reaction_center.nodes(data=True))  # Zeigt alle Knoten und ihre Eigenschaften
+        # Schritt 4: Aktualisiere compressed_label basierend auf dem neuen Label
+        for graph in [graph1, graph2]:
+            for node in graph.nodes():
+                current_label = graph.nodes[node]["label"]
+                if current_label in label_to_int:
+                    graph.nodes[node]["compressed_label"] = label_to_int[current_label]
 
-compressed_labels = [data["compressed_label"] for _, data in reaction_center.nodes(data=True)]
+        # Schritt 5: Aktualisiere die Labels erneut basierend auf den neuen compressed_labels
+        for graph in [graph1, graph2]:
+            update_labels(graph)
 
-# Zähle die Häufigkeiten der Werte
-label_counts = Counter(compressed_labels)
-b=Counter({1: 4})
-if b==label_counts:
-    print("yes")
-# Ausgabe
-print(label_counts) 
+    # Ausgabe der finalen Labels und compressed_labels
+    for graph_id, graph in enumerate([graph1, graph2], start=1):
+        print(f"Graph {graph_id}:")
+        for node in graph.nodes():
+            print(
+                f"Node {node}: "
+                f"Label = {graph.nodes[node]['label']}, "
+                f"Compressed Label = {graph.nodes[node]['compressed_label']}"
+            )
+        print("-" * 40)
+
+weisfeiler_lehman(graph1, graph2, 1)
+
+def get_histogram(graph):
+    compressed_labels = [data["compressed_label"] for _, data in graph.nodes(data=True)]
+    label_counts = Counter(compressed_labels)
+    return(label_counts)
+
+print(get_histogram(graph1))
+print(get_histogram(graph2))
 

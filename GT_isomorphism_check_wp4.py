@@ -156,3 +156,5 @@ for cluster in cluster_sets:
     iso_cluster_counter += 1
 
 print(iso_num)
+print(len(iso_num))
+

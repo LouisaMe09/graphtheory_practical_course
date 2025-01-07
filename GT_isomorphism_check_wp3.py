@@ -51,11 +51,8 @@ def are_rcs_isomorphic(rc_1, rc_2):
     def edge_match(e1, e2):
         return e1.get('order') == e2.get('order')
 
-    # Erstelle den GraphMatcher mit den Vergleichsfunktionen
-    GM = GraphMatcher(rc_1, rc_2, node_match=node_match, edge_match=edge_match)
-    
-    # Rückgabe, ob die Graphen isomorph sind
-    return GM.is_isomorphic()
+    return nx.is_isomorphic(rc_1, rc_2, node_match=node_match, edge_match=edge_match)
+
 
 
 

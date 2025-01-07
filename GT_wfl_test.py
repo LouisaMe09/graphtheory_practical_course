@@ -106,6 +106,14 @@ from synutility.SynAAM.misc import get_rc
 import networkx as nx
 from collections import Counter
 
+def get_histogram(graph):
+    """
+    Berechnet das Histogramm der compressed_labels für einen Graphen.
+    """
+    compressed_labels = [data["compressed_label"] for _, data in graph.nodes(data=True)]
+    label_counts = Counter(compressed_labels)
+    return label_counts
+
 def update_labels(graph):
     """
     Aktualisiert die Labels eines Graphen basierend auf compressed_label und den Nachbarn.
@@ -147,11 +155,15 @@ def weisfeiler_lehman(graphs, num_iterations=1):
         label_to_int = {label: idx for idx, label in enumerate(sorted(all_labels), start=2)}
 
         # Schritt 4: Aktualisiere compressed_label basierend auf dem neuen Label
-        for graph in graphs:
+        for i, graph in enumerate(graphs):
             for node in graph.nodes():
                 current_label = graph.nodes[node]["label"]
                 if current_label in label_to_int:
                     graph.nodes[node]["compressed_label"] = label_to_int[current_label]
+            histogram=get_histogram(graph)
+            graph["histogram"]=histogram
+            graphs[i] = graph
+    return graphs 
 
     # # Ausgabe der finalen Labels und compressed_labels für alle Graphen
     # for graph_id, graph in enumerate(graphs, start=1):
@@ -165,30 +177,32 @@ def weisfeiler_lehman(graphs, num_iterations=1):
     #     print("-" * 40)
     
 
-def get_histogram(graph):
-    """
-    Berechnet das Histogramm der compressed_labels für einen Graphen.
-    """
-    compressed_labels = [data["compressed_label"] for _, data in graph.nodes(data=True)]
-    label_counts = Counter(compressed_labels)
-    return label_counts
+
 
 # Beispielgraphen
 graph1 = get_rc(data[116]['ITS'])
 graph2 = get_rc(data[34]['ITS'])
 graph3 = get_rc(data[12]['ITS'])
 
+#
+graphs = []
 
-# Initialisierung der Graphen
-graphs = [graph1, graph2, graph3]
+# Schleife durch die Indizes von 0 bis len(data)
+for i in range(len(data)):
+    if 'ITS' in data[i]:  # Sicherstellen, dass der Schlüssel 'ITS' existiert
+        graph = get_rc(data[i]['ITS'])  # Graph generieren
+        graphs.append(graph)
+        
+# # Initialisierung der Graphen
+# graphs = [graph1, graph2, graph3]
 initialize_weisfeiler_lehman(graphs)
 
 # Weisfeiler-Lehmann-Iteration starten
-weisfeiler_lehman(graphs, num_iterations=1)
+print(weisfeiler_lehman(graphs, num_iterations=1))
 
-# Histogramme berechnen und ausgeben
-for graph_id, graph in enumerate(graphs, start=1):
-    print(f"Histogram for Graph {graph_id}: {get_histogram(graph)}")
+# # Histogramme berechnen und ausgeben
+# for graph_id, graph in enumerate(graphs, start=1):
+#     print(f"Histogram for Graph {graph_id}: {get_histogram(graph)}")
 
 
 

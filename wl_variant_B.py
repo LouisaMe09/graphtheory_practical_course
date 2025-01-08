@@ -1,7 +1,7 @@
 from collections import Counter
 import networkx as nx
 
-from utils import prepare_graph
+from utils import prepare_graph, are_rcs_isomorphic
 
 
 def update_labels(graph):
@@ -14,7 +14,8 @@ def update_labels(graph):
             graph.nodes[neighbor]["compressed_label"] for neighbor in graph.neighbors(node)
         ]
         sorted_neighbor_labels = tuple(sorted(neighbor_labels))
-        graph.nodes[node]["hash_label"] = (c_label, sorted_neighbor_labels)
+        #graph.nodes[node]["hash_label"] = hash((c_label, sorted_neighbor_labels))
+        graph.nodes[node]["hash_label"] = hash(sorted_neighbor_labels)
 
 
 def initialize_weisfeiler_lehman(graphs):
@@ -57,7 +58,9 @@ def weisfeiler_lehman(graphs, num_iterations=1):
                     graph.nodes[node]["compressed_label"] = label_to_int[current_label]
                     histogram = get_histogram(graph)
                     graph.graph['histogram'] = histogram
-                    graphs[i] = graph
+                    #graphs[i] = graph
+                else:
+                    print("Oh no")
 
         return graphs
 
@@ -82,7 +85,7 @@ def get_histogram(graph):
     return label_counts
 
 
-def cluster_graphs(graph_list, depth_threshold=5, depth_count=0):
+def cluster_graphs(graph_list, depth_threshold=3, depth_count=0):
     cluster_sets = []
 
     graph_list = weisfeiler_lehman(graph_list, num_iterations=1)
@@ -145,12 +148,53 @@ data = load_from_pickle(graph_path)
 
 graphs = []
 for i in range(len(data)):
-    graphs.append(get_rc(data[i]['ITS']))
+    g = data[i]['ITS']
+    graphs.append(nx.edge_subgraph(g, [(e[0], e[1]) for e in g.edges(data=True) if e[2]["standard_order"] != 0]))
+    # graphs.append(get_rc(data[i]['ITS']))
 
 # Initialisierung der Graphen
 initialize_weisfeiler_lehman(graphs)
 
 clusters = cluster_graphs(graphs)
 # print(clusters)
-print(len(clusters))
 
+iso_cluster_sets = []
+iso_sets = []
+#iso_cluster_num = []
+#iso_num = []
+
+iso_cluster_counter = 0
+
+cluster_length = len(clusters)
+
+for cluster in clusters:
+    print("Cluster: " + str(iso_cluster_counter + 1) + "/" + str(cluster_length))
+
+    iso_cluster_sets.append([])
+    #iso_cluster_num.append([])
+    for graph in cluster:
+        rc = graph
+        #graph_id = graph[2]
+        found_iso = False
+        iso_set_counter = 0
+        for iso_set in iso_cluster_sets[iso_cluster_counter]:
+            if are_rcs_isomorphic(iso_set[0], rc):
+                found_iso = True
+                iso_cluster_sets[iso_cluster_counter][iso_set_counter].append(rc)
+                #iso_cluster_num[iso_cluster_counter][iso_set_counter].append(graph_id)
+                break
+            iso_set_counter += 1
+
+        if not found_iso:
+            iso_cluster_sets[iso_cluster_counter].append([rc])
+            #iso_cluster_num[iso_cluster_counter].append([graph_id])
+
+    #for iso_set in iso_cluster_num[iso_cluster_counter]:
+    #    iso_num.append(iso_set)
+    for iso_set in iso_cluster_sets[iso_cluster_counter]:
+        iso_sets.append(iso_set)
+
+    iso_cluster_counter += 1
+
+#print(iso_sets)
+print("Iso: " + str(len(iso_sets)))

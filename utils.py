@@ -1,4 +1,4 @@
-from networkx import weisfeiler_lehman_graph_hash
+from networkx import weisfeiler_lehman_graph_hash, is_isomorphic
 
 
 def prepare_graph(graph):
@@ -61,3 +61,29 @@ def cluster_graphs_wl(graphs, iterations=2, node_attr='aggregated_attr', edge_at
 
     return clusters
 
+
+def are_rcs_isomorphic(rc_1, rc_2):
+    """
+    Prüft, ob zwei Graphen G1 und G2 isomorph sind,
+    unter Berücksichtigung von Knoten- und Kantenattributen.
+
+    Parameter:
+    - rc_1: Der erste NetworkX-Graph.
+    - rc_2: Der zweite NetworkX-Graph.
+
+    Rückgabe:
+    - True, wenn die Graphen isomorph sind, andernfalls False.
+    """
+
+    # Definiere die Knotenvergleichsfunktion
+    def node_match(n1, n2):
+        return (
+            n1.get('charge') == n2.get('charge') and
+            n1.get('element') == n2.get('element')
+        )
+
+    # Definiere die Kantenvergleichsfunktion
+    def edge_match(e1, e2):
+        return e1.get('order') == e2.get('order')
+
+    return is_isomorphic(rc_1, rc_2, node_match=node_match, edge_match=edge_match)

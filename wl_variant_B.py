@@ -9,7 +9,7 @@ def update_labels(graph):
     Aktualisiert die Labels eines Graphen basierend auf compressed_label und den Nachbarn.
     """
     for node in graph.nodes():
-        c_label = graph.nodes[node]["compressed_label"]
+        #c_label = graph.nodes[node]["compressed_label"]
         neighbor_labels = [
             graph.nodes[neighbor]["compressed_label"] for neighbor in graph.neighbors(node)
         ]
@@ -85,7 +85,7 @@ def get_histogram(graph):
     return label_counts
 
 
-def cluster_graphs(graph_list, depth_threshold=3, depth_count=0):
+def cluster_graphs(graph_list, depth_threshold=1, depth_count=0):
     cluster_sets = []
 
     graph_list = weisfeiler_lehman(graph_list, num_iterations=1)

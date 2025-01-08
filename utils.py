@@ -11,6 +11,8 @@ def prepare_graph(graph):
         charge = str(data.get('charge', ''))
         element = str(data.get('element', ''))
         data['aggregated_attr'] = f"{charge}_{element}"
+    
+    return graph
 
     # Ensure edges have proper attributes (if needed, handle missing attributes)
     #for u, v, data in graph.edges(data=True):

@@ -60,7 +60,7 @@ def are_rcs_isomorphic(rc_1, rc_2):
 
 # # Extracting reaction center and plotting using SynUtils
 from synutility.SynAAM.misc import get_rc
-from utils import compute_wl_hash
+from utils import compute_wl_hash, prepare_graph
 #rc_1 = get_rc(data[0]['ITS'])
 #rc_2 = get_rc(data[2]['ITS'])
 
@@ -103,6 +103,8 @@ for d in data:
     # rc = get_rc(data[graph_counter]['ITS'])
     g = data[graph_counter]['ITS']
     rc = nx.edge_subgraph(g, [(e[0], e[1]) for e in g.edges(data=True) if e[2]["standard_order"] != 0])
+
+    rc = prepare_graph(rc)
 
     found_cluster = False
     cluster_counter = 0

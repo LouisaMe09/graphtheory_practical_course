@@ -9,13 +9,13 @@ def update_labels(graph):
     Aktualisiert die Labels eines Graphen basierend auf compressed_label und den Nachbarn.
     """
     for node in graph.nodes():
-        #c_label = graph.nodes[node]["compressed_label"]
+        c_label = graph.nodes[node]["compressed_label"]
         neighbor_labels = [
             graph.nodes[neighbor]["compressed_label"] for neighbor in graph.neighbors(node)
         ]
         sorted_neighbor_labels = tuple(sorted(neighbor_labels))
-        #graph.nodes[node]["hash_label"] = hash((c_label, sorted_neighbor_labels))
-        graph.nodes[node]["hash_label"] = hash(sorted_neighbor_labels)
+        graph.nodes[node]["hash_label"] = hash((c_label, sorted_neighbor_labels))
+        #graph.nodes[node]["hash_label"] = hash(sorted_neighbor_labels)
 
 
 def initialize_weisfeiler_lehman(graphs):

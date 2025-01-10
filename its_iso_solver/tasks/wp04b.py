@@ -58,7 +58,7 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
             #graph.nodes[node]["hash_label"] = hash(sorted_neighbor_labels)
 
 
-    def get_histogram(self, graph):
+    def _get_histogram(self, graph):
         """
         Berechnet das Histogramm der compressed_labels für einen Graphen.
         """
@@ -76,6 +76,6 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
             # Schritt 1: Aktualisiere die Labels basierend auf compressed_label
             self._update_labels(graph)
 
-        histogram = self.get_histogram(graph)
+        histogram = self._get_histogram(graph)
         graph.graph['histogram'] = histogram
         graph.graph['depth'] += 1

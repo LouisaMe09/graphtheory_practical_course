@@ -76,7 +76,7 @@ class IsomorphismSolverTemplate():
     # cluster + isomorphism functionality combined
     def _cluster_sort(self, data: list, cluster_function: Callable[[Graph, Graph], bool], max_depth=0, current_depth=0, pre_clustered=False):
 
-        if len(data) <= 1:
+        if len(data) <= 1 and not pre_clustered:
             return [[data]]
 
         cluster_sets = []
@@ -98,22 +98,22 @@ class IsomorphismSolverTemplate():
                     cluster_sets.append([graph])
         else:
             for cluster in data:
-                cluster_sets.extend(self._cluster_sort(data=cluster, cluster_function=cluster_function, pre_clustered=False))
-
-        if max_depth > current_depth:
-            improved_cluster_sets = []
-
-            for cluster in cluster_sets:
-                improved_cluster_sets.extend(
+                cluster_sets.extend(
                     self._cluster_sort(
                         data=cluster,
-                        cluster_function=cluster_function,
                         max_depth=max_depth,
-                        current_depth=current_depth+1
+                        current_depth=current_depth,
+                        cluster_function=cluster_function,
+                        pre_clustered=False
                     )
                 )
-
-            return improved_cluster_sets
-
+        if max_depth > current_depth:
+            return self._cluster_sort(
+                        data=cluster_sets,
+                        cluster_function=cluster_function,
+                        max_depth=max_depth,
+                        current_depth=current_depth+1,
+                        pre_clustered=True
+                    )
         else:
             return cluster_sets

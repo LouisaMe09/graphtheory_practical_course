@@ -1,4 +1,4 @@
-from helpers.utils import IsomorphismSolverTemplate
+from helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
 import networkx as nx
 import numpy as np
 
@@ -12,9 +12,8 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
 
     def _calc_its_clustering(self):
         function = self.__select_cluster_function(algorithm=self.algorithm)
-        self.clustered_data = self._cluster_sort(data=self.data, cluster_function=function)
-        # self.clustered_data = self._isomorphism_sort(data=pre_clustered_data, pre_clustered=True)
-
+        pre_clustered_data = self._cluster_sort(data=self.data, cluster_function=function)
+        self.clustered_data = self._cluster_sort(data=pre_clustered_data, cluster_function=are_rcs_isomorphic, pre_clustered=True)
 
     def __select_cluster_function(self, algorithm):
         match algorithm:
@@ -26,7 +25,6 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
             case _:
                 print("Algorithm does not exist.")
                 raise LookupError
-
 
     def _vertex_count(self, rc_1, rc_2):
         return rc_1.number_of_nodes() == rc_2.number_of_nodes()

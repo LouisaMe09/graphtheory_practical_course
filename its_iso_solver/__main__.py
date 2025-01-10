@@ -2,6 +2,7 @@ import argparse
 import os
 #import tasks.wp03 as wp03
 import importlib
+from synutility.SynIO.data_type import load_from_pickle #hier data_type statt datatype
 
 
 if __name__ == '__main__':
@@ -21,6 +22,8 @@ if __name__ == '__main__':
 
     task_module = importlib.import_module('tasks.' + task)
 
-    clustered_data = task_module.IsomorphismSolver(graph_path=args['graphs'], args=args).its_clustering().get_clustered_data()
+    data = load_from_pickle(args['graphs'])
+
+    clustered_data = task_module.IsomorphismSolver(data=data, args=args).its_clustering().get_clustered_data()
 
     print(len(clustered_data))

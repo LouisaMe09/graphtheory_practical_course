@@ -40,7 +40,6 @@ def are_rcs_isomorphic(rc_1, rc_2):
     return is_isomorphic(rc_1, rc_2, node_match=node_match, edge_match=edge_match)
 
 
-from synutility.SynIO.data_type import load_from_pickle #hier data_type statt datatype
 from abc import abstractmethod
 from collections.abc import Callable
 
@@ -49,10 +48,10 @@ class IsomorphismSolverTemplate():
     
     clustered_data = []
 
-    def __init__(self, graph_path: str, args: dict):
+    def __init__(self, data: list, args: dict):
         # Lade die ITS-Graphen-Daten aus der Pickle-Datei
-        self.data = load_from_pickle(graph_path)  # Absoluter Pfad
-        
+        self.data = data
+
         for graph in self.data:
             graph['reaction_center'] = edge_subgraph(graph['ITS'], [(e[0], e[1]) for e in graph['ITS'].edges(data=True) if e[2]["standard_order"] != 0])
             prepare_graph(graph['reaction_center'])

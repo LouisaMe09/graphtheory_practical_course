@@ -5,9 +5,9 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
 
     iterations = 3
 
-    def __init__(self, graph_path: str, args: dict):
+    def __init__(self, data: str, args: dict):
         print("wp04a")
-        super().__init__(graph_path, args)
+        super().__init__(data, args)
 
     def _calc_its_clustering(self): 
         function = self._weisfeiler_lehman

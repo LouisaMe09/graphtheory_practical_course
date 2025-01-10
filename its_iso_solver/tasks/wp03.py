@@ -6,9 +6,9 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
 
     algorithm = "vertex_count"
 
-    def __init__(self, graph_path: str, args: dict):
+    def __init__(self, data: str, args: dict):
         print("wp03")
-        super().__init__(graph_path, args)
+        super().__init__(data, args)
 
     def _calc_its_clustering(self):
         function = self.__select_cluster_function(algorithm=self.algorithm)

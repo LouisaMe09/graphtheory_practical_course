@@ -1,4 +1,4 @@
-from helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
+from its_iso_solver.helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
 import networkx as nx
 import numpy as np
 

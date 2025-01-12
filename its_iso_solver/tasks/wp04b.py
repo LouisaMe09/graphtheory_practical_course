@@ -1,4 +1,4 @@
-from helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
+from its_iso_solver.helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
 from collections import Counter
 
 class IsomorphismSolver(IsomorphismSolverTemplate):

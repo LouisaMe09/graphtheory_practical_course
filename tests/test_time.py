@@ -30,8 +30,8 @@ def test_clustering_time():
     commands = {
         "task": ["wp02", "wp03", "wp04a", "wp04b"],
         "algorithm": ["vertex_count", "edge_count", "vertex_degrees", "rank"],  # "algebraic_connectivity"
-        "iteration": ['1', '2', '3'],
-        "depth": ['0', '1', '2']
+        "iteration": [1, 2, 3],
+        "depth": [0, 1, 2]
     }
 
     data = load_from_pickle(file_path)
@@ -64,7 +64,6 @@ def test_clustering_time():
                     }
 
                     clustered_data, t = execute(args, data)
-                    print(len(clustered_data))
 
                     # Assert that the result is valid
                     assert len(clustered_data) > 0, (f"The following setting with \n"
@@ -72,7 +71,7 @@ def test_clustering_time():
                                                      f"Algorithm {algorithm}, \n"
                                                      f"Iteration {iteration}, \n"
                                                      f"Depth {depth} \n"
-                                                     f"produced no clusters.")
+                                                     f"produced no clusters.\n")
 
                     # Print the time taken
                     print(f"The following setting with \n"
@@ -80,5 +79,5 @@ def test_clustering_time():
                           f"Algorithm {algorithm}, \n"
                           f"Iteration {iteration}, \n"
                           f"Depth {depth} \n"
-                          f"Took {t:.4f} seconds.")
+                          f"Took {t:.4f} seconds.\n")
 

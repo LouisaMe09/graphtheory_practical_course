@@ -47,17 +47,33 @@ from collections.abc import Callable
 class IsomorphismSolverTemplate():
     
     clustered_data = []
+    l_neighborhood = 0
 
     def __init__(self, data: list, args: dict):
         # Lade die ITS-Graphen-Daten aus der Pickle-Datei
         self.data = data
 
-        for graph in self.data:
-            graph['reaction_center'] = edge_subgraph(graph['ITS'], [(e[0], e[1]) for e in graph['ITS'].edges(data=True) if e[2]["standard_order"] != 0])
-            prepare_graph(graph['reaction_center'])
-
         for key, value in args.items():
             setattr(self, key, value)
+
+        for graph in self.data:
+            # graph['reaction_center'] = edge_subgraph(graph['ITS'], [(e[0], e[1]) for e in graph['ITS'].edges(data=True) if e[2]["standard_order"] != 0])
+            graph['reaction_center'] = self._get_subgraph(graph['ITS'], self.l_neighborhood)
+            prepare_graph(graph['reaction_center'])
+
+
+    def _get_subgraph(self, graph, L):
+        if L == 0:
+            return edge_subgraph(graph, [(e[0], e[1]) for e in graph.edges(data=True) if e[2]["standard_order"] != 0])
+        else:
+            subgraph = self._get_subgraph(graph, L-1)
+            edge_set = set()
+
+            for node in subgraph.nodes():
+                edge_set.update({(e[0], e[1]) for e in graph.edges(data=True) if e[0] == node or e[1] == node})
+            
+            edge_list = list(edge_set)
+            return edge_subgraph(graph, edge_list)
 
 
     @abstractmethod

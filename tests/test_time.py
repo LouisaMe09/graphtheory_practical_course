@@ -79,5 +79,6 @@ def test_clustering_time():
                           f"Algorithm {algorithm}, \n"
                           f"Iteration {iteration}, \n"
                           f"Depth {depth} \n"
-                          f"Took {t:.4f} seconds.\n")
+                          f"Took {t:.4f} seconds\n"
+                          f"and found {len(clustered_data)} clusters.\n")
 

@@ -36,7 +36,7 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
         return sorted(dict(rc_1.degree()).values()) == sorted(dict(rc_2.degree()).values())
 
     def _algebraic_connectivity(self, rc_1, rc_2):
-        return nx.algebraic_connectivity(rc_1, method="tracemin_lu") == nx.algebraic_connectivity(rc_2, method="tracemin_lu")
+        return nx.algebraic_connectivity(rc_1) == nx.algebraic_connectivity(rc_2)
 
     def _rank(self, rc_1, rc_2):
         adj_matrix_1 = nx.adjacency_matrix(rc_1).toarray()

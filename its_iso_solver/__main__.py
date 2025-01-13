@@ -6,7 +6,7 @@ from synutility.SynIO.data_type import load_from_pickle #hier data_type statt da
 
 
 if __name__ == '__main__':
-    file_path = os.path.join('../data', 'ITS_graphs.pkl.gz')
+    file_path = os.path.join('data', 'ITS_graphs.pkl.gz')
 
     parser = argparse.ArgumentParser()
 

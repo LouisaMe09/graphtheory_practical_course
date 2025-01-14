@@ -6,4 +6,4 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
         super().__init__(data, args)
 
     def _calc_its_clustering(self):
-        self.clustered_data = self._cluster_sort(data=self.data, is_isomorphism_function=are_rcs_isomorphic, pre_clustered=False)
+        self.clustered_data = self._cluster_sort(data=self.data, cluster_function=are_rcs_isomorphic, pre_clustered=False)

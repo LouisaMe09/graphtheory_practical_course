@@ -26,6 +26,9 @@ def execute(args, data):
 
 def test_clustering_time():
     file_path = os.path.join('../data', 'ITS_graphs.pkl.gz')
+    #file_path = os.path.join('..', 'data', 'ITS_graphs.pkl.gz')
+    #file_path = r'C:\Users\Louisa\Documents\Graphentheorie\graphtheory_practical_course\data\ITS_graphs.pkl.gz'
+
 
     commands = {
         "task": ["wp02", "wp03", "wp04a", "wp04b"],

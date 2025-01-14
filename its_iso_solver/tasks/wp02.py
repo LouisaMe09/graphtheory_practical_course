@@ -1,4 +1,4 @@
-from its_iso_solver.helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
+from helpers.utils import IsomorphismSolverTemplate, are_rcs_isomorphic
 
 class IsomorphismSolver(IsomorphismSolverTemplate):
     def __init__(self, data: str, args: dict):

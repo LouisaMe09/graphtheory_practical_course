@@ -5,12 +5,13 @@ import importlib
 from unittest.mock import MagicMock
 import importlib
 from synutility.SynIO.data_type import load_from_pickle
+import sys
 
 
 def execute(args, data):
     task = args['task']
 
-    task_module = importlib.import_module('its_iso_solver.tasks.' + task)
+    task_module = importlib.import_module('tasks.' + task)
 
     # Measure the time for clustering
     start_time = time.time()
@@ -25,7 +26,9 @@ def execute(args, data):
 
 
 def test_clustering_time():
-    file_path = os.path.join('../data', 'ITS_graphs.pkl.gz')
+    file_path = os.path.join('data', 'ITS_graphs.pkl.gz')
+    
+    sys.path.append("its_iso_solver")
 
     commands = {
         "task": ["wp02", "wp03", "wp04a", "wp04b"],

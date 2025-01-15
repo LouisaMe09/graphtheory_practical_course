@@ -3,6 +3,7 @@ import os
 #import tasks.wp03 as wp03
 import importlib
 from synutility.SynIO.data_type import load_from_pickle #hier data_type statt datatype
+import json
 
 
 if __name__ == '__main__':
@@ -27,4 +28,15 @@ if __name__ == '__main__':
 
     clustered_data = task_module.IsomorphismSolver(data=data, args=args).its_clustering().get_clustered_data()
 
-    print(len(clustered_data))
+    filename = "data.json"
+    print(f"Writing data to {filename}..")
+    d = []
+    for i, cluster in enumerate(clustered_data):
+        d.append([])
+        for graph in cluster:
+            d[i].append(graph['R-id'])
+
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(d, f, ensure_ascii=False, indent=4)
+
+    print(f"Data successfully saved in {filename}, {len(clustered_data)} isomorphism classes found.")

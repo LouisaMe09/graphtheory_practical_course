@@ -1,5 +1,5 @@
 from networkx import is_isomorphic, edge_subgraph, Graph
-
+from tqdm import tqdm
 
 def prepare_graph(graph):
     """
@@ -98,20 +98,24 @@ class IsomorphismSolverTemplate():
         cluster_sets = []
 
         if not pre_clustered:
-            for graph in data:
+            with tqdm(total=len(data), desc=f"cluster_function: {cluster_function.__name__}, current_depth: {str(current_depth)}, max_depth: {str(max_depth)}, pre_clustered: {pre_clustered}") as progress_bar:
 
-                rc = graph['reaction_center']
+                for graph in data:
 
-                found_cluster = False
+                    rc = graph['reaction_center']
 
-                for cluster_set in cluster_sets:
-                    if cluster_function(cluster_set[0]['reaction_center'], rc):
-                        found_cluster = True
-                        cluster_set.append(graph)
-                        break
-                
-                if not found_cluster:
-                    cluster_sets.append([graph])
+                    found_cluster = False
+
+                    for cluster_set in cluster_sets:
+                        if cluster_function(cluster_set[0]['reaction_center'], rc):
+                            found_cluster = True
+                            cluster_set.append(graph)
+                            break
+
+                    if not found_cluster:
+                        cluster_sets.append([graph])
+
+                    progress_bar.update(1)
         else:
             for cluster in data:
                 cluster_sets.extend(

@@ -11,17 +11,18 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-t", "--task", help="Specifies the task to be used.", required=False, default="wp02", choices=["wp02", "wp03", "wp04a", "wp04b"])
+    parser.add_argument("-t", "--task", help="Specifies the task to be used.", required=False, default="wp02", choices=["wp02", "wp03", "wp04a", "wp04b", "wpx"])
     parser.add_argument("-g", "--graphs", help="Specifies the graphs to be used.", required=False, default=file_path)
     parser.add_argument("-l", "--l_neighborhood", help="Specifies the L-neighborhood of the reaction center.", required=False, default=0, type=int)
     parser.add_argument("-a", "--algorithm", help="(wp03) Specifies the clustering algorithm to be used.", required=False, default="vertex_count", choices=["vertex_count", "edge_count", "vertex_degrees", "algebraic_connectivity", "rank"])
-    parser.add_argument("-i", "--iterations", help="(wp04a, wp04b) Specifies the number of Weisfeiler-Lehmann iterations.", required=False, default=3)
-    parser.add_argument("-d", "--depth", help="(wp04b) Specifies the clustering depth.", required=False, default=0, type=int)
+    parser.add_argument("-i", "--iterations", help="(wp04a, wp04b, wpx) Specifies the number of Weisfeiler-Lehmann iterations.", required=False, default=3, type=int)
+    parser.add_argument("-d", "--depth", help="(wp04b, wpx) Specifies the clustering depth.", required=False, default=0, type=int)
+    parser.add_argument("-x", "--algorithm-list", help="(wpx) Specifies the clustering algorithms to be used.", required=False, default=["vertex_count"], choices=["vertex_count", "edge_count", "vertex_degrees", "algebraic_connectivity", "rank", "weisfeiler_lehman", "weisfeiler_lehman_nx"], nargs='+', dest="algorithms")
 
     args = vars(parser.parse_args())
 
     task = args['task']
-
+    print(args['algorithms'])
     task_module = importlib.import_module('tasks.' + task)
 
     data = load_from_pickle(args['graphs'])

@@ -10,11 +10,11 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
         super().__init__(data, args)
 
     def _calc_its_clustering(self): 
-        function = self._weisfeiler_lehman
+        function = self._weisfeiler_lehman_nx
         pre_clustered_data = self._cluster_sort(data=self.data, cluster_function=function)
         self.clustered_data = self._cluster_sort(data=pre_clustered_data, cluster_function=are_rcs_isomorphic, pre_clustered=True)
 
-    def _weisfeiler_lehman(self, rc_1, rc_2):
+    def _weisfeiler_lehman_nx(self, rc_1, rc_2):
         return self._compute_wl_hash(rc_1, self.iterations) == self._compute_wl_hash(rc_2, self.iterations)
 
     # can be substituted into _weisfeiler_lehman

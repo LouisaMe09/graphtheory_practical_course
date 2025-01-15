@@ -90,15 +90,12 @@ class IsomorphismSolverTemplate():
     
 
     # cluster + isomorphism functionality combined
-    def _cluster_sort(self, data: list, cluster_function: Callable[[Graph, Graph], bool], max_depth=0, current_depth=0, pre_clustered=False):
-
-        if len(data) <= 1 and not pre_clustered:
-            return [data]
+    def _cluster_sort(self, data: list, cluster_function: Callable[[Graph, Graph], bool], max_depth=0, current_depth=0, pre_clustered=False, cluster_number=1, cluster_count=1):
 
         cluster_sets = []
 
         if not pre_clustered:
-            with tqdm(total=len(data), desc=f"cluster_function={cluster_function.__name__}, current_depth={str(current_depth)}, max_depth={str(max_depth)}, pre_clustered={pre_clustered}") as progress_bar:
+            with tqdm(total=len(data), desc=f"cluster_function={cluster_function.__name__}, depth={str(current_depth)}/{str(max_depth)}, cluster={cluster_number}/{cluster_count}") as progress_bar:
 
                 for graph in data:
 
@@ -117,14 +114,17 @@ class IsomorphismSolverTemplate():
 
                     progress_bar.update(1)
         else:
-            for cluster in data:
+            cluster_count = len(data)
+            for i, cluster in enumerate(data):
                 cluster_sets.extend(
                     self._cluster_sort(
                         data=cluster,
                         max_depth=max_depth,
                         current_depth=current_depth,
                         cluster_function=cluster_function,
-                        pre_clustered=False
+                        pre_clustered=False,
+                        cluster_number=i+1,
+                        cluster_count=cluster_count
                     )
                 )
         if max_depth > current_depth:

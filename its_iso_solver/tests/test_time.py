@@ -93,7 +93,7 @@ from synutility.SynIO.data_type import load_from_pickle
 import sys
 
 # CSV-Datei vorbereiten
-output_csv = 'clustering_results_2.csv'
+output_csv = 'clustering_results.csv'
 columns = ['task', 'algorithm', 'iteration', 'depth', 'time', 'clusters']
 if not os.path.exists(output_csv):
     pd.DataFrame(columns=columns).to_csv(output_csv, index=False)

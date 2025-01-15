@@ -10,7 +10,7 @@ class IsomorphismSolver(WP03, WP04A, WP04B):
 
     def __init__(self, data: str, args: dict):
         print("wpx")
-        super().__init__(data, args)
+        self.__class__.__mro__[4].__init__(self, data, args)
 
     def _calc_its_clustering(self):
         start = time.time()

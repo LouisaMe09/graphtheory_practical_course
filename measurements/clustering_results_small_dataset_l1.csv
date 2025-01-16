@@ -1,0 +1,64 @@
+task,algorithm,iteration,depth,time,clusters
+wpx,"['vertex_count', 'weisfeiler_lehman']",1,0,62.1823,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",1,1,66.8307,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",1,2,77.2078,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",2,0,83.927,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",2,1,92.1449,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",2,2,107.2617,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",3,0,105.1306,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",3,1,116.4547,1529
+wpx,"['vertex_count', 'weisfeiler_lehman']",3,2,147.1792,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",1,0,70.4054,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",1,1,77.988,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",1,2,86.8868,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",2,0,87.7044,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",2,1,100.903,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",2,2,125.1782,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",3,0,111.4398,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",3,1,124.1023,1529
+wpx,"['edge_count', 'weisfeiler_lehman']",3,2,143.8511,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",1,0,70.0868,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",1,1,76.9321,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",1,2,104.984,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",2,0,104.3765,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",2,1,108.7134,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",2,2,140.1782,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",3,0,114.4609,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",3,1,104.0351,1529
+wpx,"['vertex_degrees', 'weisfeiler_lehman']",3,2,129.257,1529
+wpx,"['rank', 'weisfeiler_lehman']",1,0,151.4415,1529
+wpx,"['rank', 'weisfeiler_lehman']",1,1,152.6075,1529
+wpx,"['rank', 'weisfeiler_lehman']",1,2,184.114,1529
+wpx,"['rank', 'weisfeiler_lehman']",2,0,260.196,1529
+wpx,"['rank', 'weisfeiler_lehman']",2,1,245.8243,1529
+wpx,"['rank', 'weisfeiler_lehman']",2,2,269.0861,1529
+wpx,"['rank', 'weisfeiler_lehman']",3,0,316.1837,1529
+wpx,"['rank', 'weisfeiler_lehman']",3,1,363.0729,1529
+wpx,"['rank', 'weisfeiler_lehman']",3,2,328.6275,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",1,0,65.7684,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",1,1,65.3176,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",1,2,81.6566,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",2,0,78.591,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",2,1,89.612,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",2,2,109.602,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",3,0,96.876,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",3,1,105.3408,1529
+wpx,"['vertex_count', 'edge_count', 'weisfeiler_lehman']",3,2,126.1366,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",1,0,54.5216,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",1,1,60.0346,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",1,2,70.7946,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",2,0,67.0943,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",2,1,79.1459,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",2,2,93.3084,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",3,0,76.1063,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",3,1,87.2876,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'weisfeiler_lehman']",3,2,109.0422,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",1,0,73.5457,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",1,1,78.9485,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",1,2,93.1496,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",2,0,83.9032,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",2,1,92.2417,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",2,2,108.6737,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",3,0,97.3952,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",3,1,107.5831,1529
+wpx,"['vertex_count', 'edge_count', 'vertex_degrees', 'rank', 'weisfeiler_lehman']",3,2,127.037,1529

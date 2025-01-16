@@ -101,6 +101,8 @@ class IsomorphismSolverTemplate():
 
                     rc = graph['reaction_center']
 
+                    rc.graph['current_depth'] = current_depth
+
                     found_cluster = False
 
                     for cluster_set in cluster_sets:

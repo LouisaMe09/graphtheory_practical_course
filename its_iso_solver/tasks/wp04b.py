@@ -21,13 +21,19 @@ class IsomorphismSolver(IsomorphismSolverTemplate):
 
     def _weisfeiler_lehman_compare(self, rc1, rc2):
         # rc1 = first member of cluster, rc2 = compare graph
-        rc1_depth = rc1.graph['depth']
-        rc2_depth = rc2.graph['depth']
+        # rc1_depth = rc1.graph['depth']
+        # rc2_depth = rc2.graph['depth']
         
-        if rc1_depth == -1 or rc1_depth == rc2_depth:
+        # if rc1_depth == -1 or rc1_depth == rc2_depth:
+        #     self._weisfeiler_lehman(rc1)
+        
+        # self._weisfeiler_lehman(rc2)
+        
+        if rc1.graph['depth'] != rc1.graph['current_depth']:
             self._weisfeiler_lehman(rc1)
         
-        self._weisfeiler_lehman(rc2)
+        if rc2.graph['depth'] != rc2.graph['current_depth']:
+            self._weisfeiler_lehman(rc2)
         
         return rc1.graph['histogram'] == rc2.graph['histogram']
 

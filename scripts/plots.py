@@ -9,12 +9,13 @@ data = pd.read_csv(input_csv)
 
 # Anpassung der x-Achsen-Beschriftung basierend auf Task
 def create_task_label(row):
-    if row['task'] == 'wp03':
-        return f"{row['task']} ({row['algorithm']})"
-    elif row['task'] == 'wp04b':
-        return f"{row['task']} (Depth {row['depth']})"
-    else:  # Für wp02 und wp04a nur den Task
-        return row['task']
+    # if row['task'] == 'wp03':
+    #     return f"{row['task']} ({row['algorithm']})"
+    # elif row['task'] == 'wp04b':
+    #     return f"{row['task']} (Depth {row['depth']})"
+    # else:  # Für wp02 und wp04a nur den Task
+    #     return row['task']
+    return f"alg:{row['algorithm']}-d:{row['depth']}-it{row['iteration']}"
 
 # Neue Spalte für die angepasste x-Achsen-Beschriftung
 data['task_label'] = data.apply(create_task_label, axis=1)

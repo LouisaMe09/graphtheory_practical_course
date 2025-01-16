@@ -13,9 +13,9 @@ def execute(args, data):
     task_module = importlib.import_module('tasks.' + task)
 
     # Measure the time for clustering
-    start_time = time.time()
-
     module = task_module.IsomorphismSolver(data=data, args=args)
+    
+    start_time = time.time()
 
     clustered_data = module.its_clustering().get_clustered_data()
 
@@ -34,83 +34,80 @@ def test_clustering_time():
     sys.path.append("its_iso_solver")
 
     commands = {
-        "task": ["wp02", "wp03", "wp04a", "wp04b"],
-        "algorithm": ["vertex_count", "edge_count", "vertex_degrees","algebraic_connectivity", "rank"],
-        "iteration": [1, 2, 3],
-        "depth": [0, 1, 2]
+        "task": ["wpx"],
+        "algorithms": [
+            ["vertex_count", "weisfeiler_lehman"],
+            ["edge_count", "weisfeiler_lehman"],
+            ["vertex_degrees", "weisfeiler_lehman"],
+            ["rank", "weisfeiler_lehman"],
+            ["vertex_count", "edge_count", "weisfeiler_lehman"],
+            ["vertex_count", "edge_count", "vertex_degrees", "weisfeiler_lehman"],
+            ["vertex_count", "edge_count", "vertex_degrees", "rank", "weisfeiler_lehman"]
+            ],
+        "iterations": [1, 2, 3],
+        "depths": [0, 1, 2]
     }
 
     data = load_from_pickle(file_path)
 
     results = []
 
-    for task in commands['task']:
-        algorithms = ['vertex_count']
-        iterations = [1]
-        depths = [0]
+    task = "wpx"
+    algorithms = commands['algorithms']
+    iterations = commands['iterations']
+    depths = commands['depths']
 
-        if task == 'wp03':
-            algorithms = commands['algorithm']
+    # if task == 'wp03':
+    #     algorithms = commands['algorithm']
 
-        if task == 'wp04a':
-            iterations = commands['iteration']
-            depths = [0]
+    # if task == 'wp04a':
+    #     iterations = commands['iteration']
+    #     depths = [0]
 
-        if task == 'wp04b':
-            iterations = commands['iteration']
-            depths = commands['depth']
+    # if task == 'wp04b':
+    #     iterations = commands['iteration']
+    #     depths = commands['depth']
 
-        for algorithm in algorithms:
-            for iteration in iterations:
-                for depth in depths:
-                    if task in ['wp02', 'wp03']:
-                        iteration = 1
-                        depth = 0
-                        if task == 'wp02':
-                            algorithm = 'x'
+    for algorithm in algorithms:
+        for iteration in iterations:
+            for depth in depths:
 
-                    if task == 'wp04a':
-                        algorithm = 'x'
+                args = {
+                    'task': task,
+                    'algorithms': algorithm,
+                    'iterations': iteration,
+                    'depth': depth
+                }
 
-                    if task == 'wp04b':
-                        algorithm = 'x'
+                clustered_data, t = execute(args, data)
 
-                    args = {
-                        'task': task,
-                        'algorithm': algorithm,
-                        'iterations': iteration,
-                        'depth': depth
-                    }
+                # Ergebnis speichern
+                result = {
+                    'task': task,
+                    'algorithms': algorithm,
+                    'iteration': iteration,
+                    'depth': depth,
+                    'time': round(t, 4),
+                    'clusters': len(clustered_data)  # Anzahl der Cluster hinzufügen
+                }
+                results.append(result)
 
-                    clustered_data, t = execute(args, data)
+                # Debugging-Ausgabe
+                print(f"The following setting with \n"
+                        f"Task {task}, \n"
+                        f"Algorithm {algorithm}, \n"
+                        f"Iteration {iteration}, \n"
+                        f"Depth {depth} \n"
+                        f"Took {t:.4f} seconds\n"
+                        f"and found {len(clustered_data)} clusters.\n")
 
-                    # Ergebnis speichern
-                    result = {
-                        'task': task,
-                        'algorithm': algorithm,
-                        'iteration': iteration,
-                        'depth': depth,
-                        'time': round(t, 4),
-                        'clusters': len(clustered_data)  # Anzahl der Cluster hinzufügen
-                    }
-                    results.append(result)
-
-                    # Debugging-Ausgabe
-                    print(f"The following setting with \n"
-                          f"Task {task}, \n"
-                          f"Algorithm {algorithm}, \n"
-                          f"Iteration {iteration}, \n"
-                          f"Depth {depth} \n"
-                          f"Took {t:.4f} seconds\n"
-                          f"and found {len(clustered_data)} clusters.\n")
-
-                    # Assert
-                    assert len(clustered_data) > 0, (f"The following setting with \n"
-                                                     f"Task {task}, \n"
-                                                     f"Algorithm {algorithm}, \n"
-                                                     f"Iteration {iteration}, \n"
-                                                     f"Depth {depth} \n"
-                                                     f"produced no clusters.\n")
+                # Assert
+                assert len(clustered_data) == 299, (f"The following setting with \n"
+                                                    f"Task {task}, \n"
+                                                    f"Algorithm {algorithm}, \n"
+                                                    f"Iteration {iteration}, \n"
+                                                    f"Depth {depth} \n"
+                                                    f"produced no clusters.\n")
 
     # Ergebnisse in die CSV-Datei schreiben
     df = pd.DataFrame(results)

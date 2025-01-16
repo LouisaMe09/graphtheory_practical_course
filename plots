@@ -4,7 +4,7 @@ import seaborn as sns
 
 
 # CSV-Datei einlesen
-input_csv = 'clustering_results_2.csv'
+input_csv = 'clustering_results.csv'
 data = pd.read_csv(input_csv)
 
 # Anpassung der x-Achsen-Beschriftung basierend auf Task

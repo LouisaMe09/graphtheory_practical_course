@@ -93,7 +93,7 @@ from synutility.SynIO.data_type import load_from_pickle
 import sys
 
 # CSV-Datei vorbereiten
-output_csv = 'clustering_results_2.csv'
+output_csv = 'clustering_results_larger.csv'
 columns = ['task', 'algorithm', 'iteration', 'depth', 'time', 'clusters']
 if not os.path.exists(output_csv):
     pd.DataFrame(columns=columns).to_csv(output_csv, index=False)
@@ -117,12 +117,13 @@ def execute(args, data):
 
 
 def test_clustering_time():
-    file_path = os.path.join('data', 'ITS_graphs.pkl.gz')
+    file_path = os.path.join('data', 'ITS_largerdataset.pkl.gz')
+    #C:\Users\Louisa\Documents\Graphentheorie\graphtheory_practical_course\data\ITS_largerdataset.pkl.gz
     sys.path.append("its_iso_solver")
 
     commands = {
         "task": ["wp02", "wp03", "wp04a", "wp04b"],
-        "algorithm": ["vertex_count", "edge_count", "vertex_degrees","algebraic_connectivity", "rank"],
+        "algorithm": ["vertex_count", "edge_count", "vertex_degrees", "rank"],
         "iteration": [1, 2, 3],
         "depth": [0, 1, 2]
     }

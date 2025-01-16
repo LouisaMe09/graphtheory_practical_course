@@ -1,0 +1,10 @@
+task,algorithm,iteration,depth,time,clusters
+wpx,"['vertex_count', 'weisfeiler_lehman']",1,0,548.9014,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",1,1,555.3938,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",1,2,769.6497,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",2,0,549.4542,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",2,1,561.0854,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",2,2,930.2293,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",3,0,551.2818,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",3,1,565.6549,754
+wpx,"['vertex_count', 'weisfeiler_lehman']",3,2,1079.0259,754
